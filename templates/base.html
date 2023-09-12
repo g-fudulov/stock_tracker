@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Portfolio Tracker</title>
+</head>
+<body>
+    <header>
+        <a href="{% url 'homepage' %}">Home</a>
+        {% if request.user.is_anonymous %}
+            <a href="{% url 'register_user' %}" >Register</a>
+            <a href="{% url 'login_user' %}" >Login</a>
+            <h5>Not Logged In</h5>
+        {% else %}
+            <a href="{% url 'portfolio_details' request.user.profile.portfolio.pk %}">View portfolio</a>
+            <a href="{% url 'logout_user' %}">Logout</a>
+            <h5>Logged in as: {{ request.user }}</h5>
+        {% endif %}
+    </header>
+    <main>
+        {% block page_content %}
+        {% endblock %}
+    </main>
+    <footer>
+
+    </footer>
+</body>
+</html>

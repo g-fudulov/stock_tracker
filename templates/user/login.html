@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block page_content %}
+    <div class="my form wrapper">
+        <h1>Login</h1>
+        <form method="post" action="{% url 'login_user' %}">
+            {% csrf_token %}
+            <div class="my elements-form wrapper">
+                {{ form.as_p }}
+            </div>
+            <input type="hidden" name="next" value="{{ next }}">
+            <button>Register</button>
+        </form>
+    </div>
+{% endblock %}
