@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 
-from stock_portfolio_tracker.stock_tracker_stocks.models import Profile, Portfolio, PortfolioItem, Stock
+from stock_portfolio_tracker.stock_tracker_stocks.models import Portfolio, PortfolioItem, Stock
 from django.views import generic as views
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
