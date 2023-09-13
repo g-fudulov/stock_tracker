@@ -12,6 +12,10 @@
                 <p>Average Purchase Price: &dollar;{{ item.average_purchase_price }}</p>
                 <p>Shares: {{ item.quantity }}</p>
             </div>
+            <div>Current Price: &dollar;</div>
+            <a href="{% url 'buy_stock' object.pk item.stock.symbol %}">Buy</a>
+{#            <a href="{% url 'sell_stock' object.pk item.stock.symbol %}">Sell</a>#}
+            <a href="{% url 'remove_stock' object.pk item.stock.symbol %}">Remove</a>
         {% empty %}
             <p>No investments!</p>
         {% endfor %}

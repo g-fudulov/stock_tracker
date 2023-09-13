@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block page_content %}
+  <h1>Buy {{ portfolio_item.stock.name }}</h1>
+  <form method="post">
+    {% csrf_token %}
+      <p>{{ portfolio_item.stock.symbol }}</p>
+    {{ form.as_p }}
+    <button type="submit">Confirm Buy</button>
+  </form>
+{% endblock %}

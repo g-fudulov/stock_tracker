@@ -22,9 +22,12 @@ class LoginUser(auth_views.LoginView):
     template_name = 'user/login.html'
     success_url = reverse_lazy('homepage')
 
-    # TODO: return details portfolio
-    # def get_success_url(self):
-    #     return reverse_lazy()
+    def get_success_url(self):
+        return reverse_lazy("portfolio_details",
+                            kwargs={
+                                'portfolio_pk': self.request.user.profile.portfolio.pk
+                            }
+                            )
 
 
 class RegisterUser(views.CreateView):
@@ -32,10 +35,6 @@ class RegisterUser(views.CreateView):
     template_name = 'user/register.html'
     form_class = CustomRegisterUserForm
     success_url = reverse_lazy('homepage')
-
-    # TODO: return details portfolio
-    # def get_success_url(self):
-    #     return reverse_lazy()
 
     def form_valid(self, form):
         response = super().form_valid(form)

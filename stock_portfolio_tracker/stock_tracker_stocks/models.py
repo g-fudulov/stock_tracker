@@ -22,8 +22,8 @@ class Portfolio(models.Model):
 class PortfolioItem(models.Model):
     portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE)
     stock = models.ForeignKey("Stock", on_delete=models.CASCADE)
-    quantity = models.PositiveIntegerField()
-    average_purchase_price = models.PositiveIntegerField()
+    quantity = models.FloatField()
+    average_purchase_price = models.FloatField()
 
     def __str__(self):
         return f"{self.stock.symbol} - {self.quantity} shares"
@@ -32,7 +32,7 @@ class PortfolioItem(models.Model):
 class Stock(models.Model):
     symbol = models.CharField(max_length=10, unique=True)
     name = models.CharField(max_length=100)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    price = models.FloatField()
 
     def __str__(self):
         return self.symbol

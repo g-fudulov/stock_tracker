@@ -35,9 +35,12 @@ class UserManager(BaseUserManager):
         return self._create_user(email, password, **extra_fields)
 
 
-# Create your models here.
 class MyUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(blank=False, null=False, unique=True)
+    is_staff = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+
     USERNAME_FIELD = "email"
 
     objects = UserManager()
