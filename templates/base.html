@@ -14,6 +14,7 @@
             <h5>Not Logged In</h5>
         {% else %}
             <a href="{% url 'portfolio_details' request.user.profile.portfolio.pk %}">View portfolio</a>
+            <a href="{% url 'profile_details' request.user.profile.pk %}">View Profile</a>
             <a href="{% url 'logout_user' %}">Logout</a>
             <h5>Logged in as: {{ request.user }}</h5>
         {% endif %}

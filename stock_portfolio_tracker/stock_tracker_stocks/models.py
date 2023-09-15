@@ -9,6 +9,7 @@ class Profile(models.Model):
     first_name = models.CharField(max_length=25, blank=True, null=True)
     last_name = models.CharField(max_length=25, blank=True, null=True)
     address = models.CharField(max_length=60, blank=True, null=True)
+    created = models.DateField(auto_now=True)
 
 
 class Portfolio(models.Model):

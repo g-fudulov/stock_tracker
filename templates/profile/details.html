@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block page_content %}
+    <h2>Profile Details</h2>
+    <p>First Name: {{ object.first_name }}</p>
+    <p>Last Name: {{ object.last_name }}</p>
+    <p>Address Name: {{ object.address }}</p>
+    <p>Created On: {{ object.created }}</p>
+    <a href="{% url 'profile_update' request.user.profile.pk %}">Update Personal Details</a>
+{% endblock %}

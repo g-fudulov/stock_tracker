@@ -24,6 +24,9 @@ class PortfolioDetails(LoginRequiredMixin, UserPassesTestMixin, views.DetailView
     def test_func(self):
         return self.get_object().owner.user_id == self.request.user.pk
 
+    def handle_no_permission(self):
+        return render(self.request, 'access_denied.html', status=404)
+
 
 @login_required(login_url=reverse_lazy('login_user'))
 def add_stock_to_portfolio(request, portfolio_pk):
@@ -116,13 +119,5 @@ class RemoveStock(LoginRequiredMixin, UserPassesTestMixin, views.DeleteView):
     def test_func(self):
         return self.request.user.pk == self.get_profile_of_portfolio().user_id
 
-
-# @login_required(login_url=reverse_lazy('login_user'))
-# def sell_stock(request, portfolio_pk, stock_symbol):
-#     portfolio = get_object_or_404(Portfolio, pk=portfolio_pk)
-#     stock = get_object_or_404(Stock, symbol=stock_symbol)
-#
-#     if request.user.pk != portfolio.owner.user.pk:  # Check for access
-#         return render(request, 'access_denied.html')
-#
-#     form =
+    def handle_no_permission(self):
+        return render(self.request, 'access_denied.html', status=404)

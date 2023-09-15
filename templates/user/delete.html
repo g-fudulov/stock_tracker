@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block page_content %}
+    <h1>Delete Profile</h1>
+    <p style="color: crimson;">All related stocks will be deleted!</p>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+  </form>
+{% endblock %}
