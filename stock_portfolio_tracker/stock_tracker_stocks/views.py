@@ -1,3 +1,4 @@
+import requests
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
@@ -6,7 +7,8 @@ from stock_portfolio_tracker.stock_tracker_stocks.models import Portfolio, Portf
 from django.views import generic as views
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from stock_portfolio_tracker.stock_tracker_stocks.forms import StockAddForm, BuyStockForm
+from stock_portfolio_tracker.stock_tracker_stocks.forms import BuyStockForm, SearchStockForm
+import api_config
 
 UserModel = get_user_model()
 
@@ -28,6 +30,32 @@ class PortfolioDetails(LoginRequiredMixin, UserPassesTestMixin, views.DetailView
         return render(self.request, 'access_denied.html', status=404)
 
 
+def check_stock_exists(symbol):
+    querystring = {"country": "United States", "symbol": f"{symbol}", "format": "json"}
+
+    try:
+        # Make a GET request to the API
+        response = requests.get(api_config.url, headers=api_config.headers, params=querystring)
+
+        if response.status_code == 200:
+            # Parse the JSON response
+            parsed_response = response.json()
+
+            # Check if the response contains valid stock data
+            if not parsed_response['data']:
+                return False  # Does not exist
+            else:
+                return parsed_response  # Exists
+
+        else:
+            # Handle API request error (e.g., API key is invalid)
+            return False
+
+    except requests.exceptions.RequestException:
+        # Handle network-related errors
+        return False
+
+
 @login_required(login_url=reverse_lazy('login_user'))
 def add_stock_to_portfolio(request, portfolio_pk):
     portfolio = get_object_or_404(Portfolio, pk=portfolio_pk)
@@ -35,41 +63,38 @@ def add_stock_to_portfolio(request, portfolio_pk):
     if request.user.pk != portfolio.owner.user.pk:  # Check for access
         return render(request, 'access_denied.html')
 
-    form = StockAddForm()
-    if request.method == 'POST':
-        form = StockAddForm(request.POST)
+    form = SearchStockForm()
+    if request.method == "POST":
+        form = SearchStockForm(request.POST)
         if form.is_valid():
-            # Get or create the stock (based on symbol)
             symbol = form.cleaned_data['symbol']
-            stock, created = Stock.objects.get_or_create(symbol=symbol, defaults={
-                'name': form.cleaned_data['name'],
-                'price': form.cleaned_data['price'],
-            })
-            """Creates a new PortfolioItem instance by the ticker symbol"""
+            stock_data = check_stock_exists(symbol)
+
+            if not stock_data:
+                return render(request, 'portfolio/not_existing.html')
+
+            parsed_symbol = stock_data['data'][0]['symbol']
+            parsed_name = stock_data['data'][0]['name']
+            stock, created = Stock.objects.get_or_create(
+                symbol=parsed_symbol,
+                defaults={
+                    'name': parsed_name,
+                    'price': 0,
+                })
+
             existing_portfolio_item = PortfolioItem.objects.filter(portfolio=portfolio, stock=stock).first()
 
-            if existing_portfolio_item:
-                """Calculate the average price per share"""
-                total_quantity = existing_portfolio_item.quantity + form.cleaned_data['quantity']
-                total_cost = ((existing_portfolio_item.quantity * existing_portfolio_item.average_purchase_price)
-                              + (form.cleaned_data['quantity'] * form.cleaned_data['price']))
-                average_purchase_price = total_cost / total_quantity
-
-                existing_portfolio_item.quantity = total_quantity
-                existing_portfolio_item.average_purchase_price = average_purchase_price
-                existing_portfolio_item.save()
-            else:
-                # Create a new portfolio item with the specified stock and quantity
+            if not existing_portfolio_item:
                 PortfolioItem.objects.create(
                     portfolio=portfolio,
                     stock=stock,
-                    quantity=form.cleaned_data['quantity'],
-                    average_purchase_price=form.cleaned_data['price'],
+                    quantity=0,
+                    average_purchase_price=0,
                 )
 
-            return redirect('portfolio_details', portfolio_pk=portfolio_pk)
+            return redirect('buy_stock', portfolio_pk=portfolio_pk, stock_symbol=parsed_symbol)
 
-    return render(request, 'portfolio/add.html', {'form': form})
+    return render(request, 'portfolio/search_stock.html', {"form": form})
 
 
 @login_required(login_url=reverse_lazy('login_user'))
