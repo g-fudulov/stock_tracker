@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block page_content %}
+    <h1>Portfolio Buys</h1>
+    <p>Realised P&L: &dollar;{{ realised_pnl }}</p>
+    <a href="{% url 'sales_details' profile_pk portfolio_pk %}">Sales History</a>
+    <hr>
+    {% for buy in object_list %}
+        <p>Ticker Symbol: {{ buy.stock.symbol }}</p>
+        <p>Name: {{ buy.stock.name }}</p>
+        <p>Date: {{ buy.date }}</p>
+        <p>Shares: {{ buy.quantity_bought }}</p>
+        <p>Price: {{ buy.buy_price }}</p>
+        <hr>
+    {% empty%}
+        <p>No buys recorded!</p>
+    {% endfor %}
+{% endblock %}

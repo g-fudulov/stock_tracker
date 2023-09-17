@@ -3,6 +3,9 @@
 {% block page_content %}
     <h1>Portfolio</h1>
     <p>Value: &dollar;</p>
+    <p>Realised P&L: &dollar;{{ object.realised_pnl }}</p>
+    <a href="{% url 'sales_details' object.owner_id object.pk %}">Sales History</a>
+    <a href="{% url 'buys_details' object.owner_id object.pk %}">Buys History</a>
     <hr>
     <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
     <h3>Investments</h3>
@@ -14,7 +17,7 @@
             </div>
             <div>Current Price: &dollar;</div>
             <a href="{% url 'buy_stock' object.pk item.stock.symbol %}">Buy</a>
-{#            <a href="{% url 'sell_stock' object.pk item.stock.symbol %}">Sell</a>#}
+            <a href="{% url 'sell_stock' object.pk item.stock.symbol %}">Sell</a>
             <a href="{% url 'remove_stock' object.pk item.stock.symbol %}">Remove</a>
         {% empty %}
             <p>No investments!</p>
