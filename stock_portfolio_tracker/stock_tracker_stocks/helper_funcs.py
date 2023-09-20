@@ -1,4 +1,4 @@
-import api_config
+from static import api_config
 import requests
 
 

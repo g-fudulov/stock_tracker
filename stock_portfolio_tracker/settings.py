@@ -128,6 +128,9 @@ AUTH_USER_MODEL = 'stock_tracker_users.MyUser'
 LOGOUT_REDIRECT_URL = reverse_lazy('login_user')
 LOGIN_URL = reverse_lazy('login_user')
 LOGIN_REDIRECT_URL = reverse_lazy('homepage')
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

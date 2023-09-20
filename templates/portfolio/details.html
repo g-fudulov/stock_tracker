@@ -2,7 +2,7 @@
 {% load static %}
 {% block page_content %}
     <h1>Portfolio</h1>
-    <p>Value: &dollar;</p>
+    <p class="portfolio total-value">Value: &dollar;</p>
     <p>Realised P&L: &dollar;{{ object.realised_pnl }}</p>
     <a href="{% url 'sales_details' object.owner_id object.pk %}">Sales History</a>
     <a href="{% url 'buys_details' object.owner_id object.pk %}">Buys History</a>
@@ -15,7 +15,8 @@
                 <p>Average Purchase Price: &dollar;{{ item.average_purchase_price }}</p>
                 <p>Shares: {{ item.quantity }}</p>
             </div>
-            <div>Current Price: &dollar;</div>
+            <button id="{{ item.stock.symbol }}btn" class="refresh btn">Refresh Price</button>
+            <div><p id="{{ item.stock.symbol }} price">Current Price: &dollar;</p></div>
             <a href="{% url 'buy_stock' object.pk item.stock.symbol %}">Buy</a>
             <a href="{% url 'sell_stock' object.pk item.stock.symbol %}">Sell</a>
             <a href="{% url 'remove_stock' object.pk item.stock.symbol %}">Remove</a>
@@ -24,4 +25,5 @@
         {% endfor %}
     </div>
     <a href="{% url 'add_stock' request.user.profile.portfolio.pk %}">Add Position</a>
+    <script src="{% static 'js/refreshQuotes.js' %}"></script>
 {% endblock %}
