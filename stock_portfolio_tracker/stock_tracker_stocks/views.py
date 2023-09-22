@@ -27,7 +27,12 @@ class PortfolioDetails(LoginRequiredMixin, UserPassesTestMixin, views.DetailView
         return self.get_object().owner.user_id == self.request.user.pk
 
     def handle_no_permission(self):
-        return render(self.request, 'access_denied.html', status=404)
+        return render(
+            self.request,
+            'access_denied.html',
+            {"error": 'You are not the owner of this portfolio!'},
+            status=404
+        )
 
 
 @login_required(login_url=reverse_lazy('login_user'))
@@ -35,7 +40,11 @@ def add_stock_to_portfolio(request, portfolio_pk):
     portfolio = get_object_or_404(Portfolio, pk=portfolio_pk)
 
     if request.user.pk != portfolio.owner.user.pk:  # Check for access
-        return render(request, 'access_denied.html')
+        return render(
+            request,
+            'access_denied.html',
+            {"error": 'You are not the owner of this portfolio!'}
+        )
 
     form = SearchStockForm()
     if request.method == "POST":
@@ -78,7 +87,11 @@ def buy_stock(request, portfolio_pk, stock_symbol):
     portfolio_item = PortfolioItem.objects.filter(portfolio=portfolio, stock=stock).first()
 
     if request.user.pk != portfolio.owner.user.pk:  # Check for access
-        return render(request, 'access_denied.html')
+        return render(
+            request,
+            'access_denied.html',
+            {"error": 'You are not the owner of this portfolio!'}
+        )
 
     form = BuyStockForm()
     if request.method == "POST":
@@ -131,7 +144,12 @@ class RemoveStock(LoginRequiredMixin, UserPassesTestMixin, views.DeleteView):
         return self.request.user.pk == self.get_profile_of_portfolio().user_id
 
     def handle_no_permission(self):
-        return render(self.request, 'access_denied.html', status=404)
+        return render(
+            self.request,
+            'access_denied.html',
+            {"error": 'You are not the owner of this portfolio!'},
+            status=404
+        )
 
 
 @login_required(login_url=reverse_lazy("login_user"))
@@ -141,7 +159,18 @@ def sell_stock(request, portfolio_pk, stock_symbol):
     portfolio_item = PortfolioItem.objects.filter(portfolio=portfolio, stock=stock).first()
 
     if request.user.pk != portfolio.owner.user.pk:  # Check for access
-        return render(request, 'access_denied.html')
+        return render(
+            request,
+            'access_denied.html',
+            {"error": 'You are not the owner of this portfolio!'}
+        )
+
+    if not portfolio_item:
+        return render(
+            request,
+            'access_denied.html',
+            {"error": f'{stock_symbol} does not exist in your portfolio!'}
+        )
 
     form = SellStockForm()
     if request.method == "POST":
@@ -208,7 +237,12 @@ class SalesDetails(LoginRequiredMixin, UserPassesTestMixin, views.ListView):
         return self.request.user.pk == get_object_or_404(Profile, pk=self.kwargs['profile_pk']).user_id
 
     def handle_no_permission(self):
-        render(self.request, 'access_denied.html')
+        return render(
+            self.request,
+            'access_denied.html',
+            {"error": 'You are not the owner of this portfolio details!'},
+            status=404
+        )
 
 
 class BuysDetails(LoginRequiredMixin, UserPassesTestMixin, views.ListView):
@@ -230,4 +264,9 @@ class BuysDetails(LoginRequiredMixin, UserPassesTestMixin, views.ListView):
         return self.request.user.pk == get_object_or_404(Profile, pk=self.kwargs['profile_pk']).user_id
 
     def handle_no_permission(self):
-        render(self.request, 'access_denied.html')
+        return render(
+            self.request,
+            'access_denied.html',
+            {"error": 'You are not the owner of this portfolio details!'},
+            status=404
+        )

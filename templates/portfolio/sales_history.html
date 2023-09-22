@@ -4,7 +4,7 @@
     <h1>Portfolio Sales</h1>
     <p>Realised P&L: &dollar;{{ realised_pnl }}</p>
     <a href="{% url 'buys_details' profile_pk portfolio_pk %}">Buys History</a>
-    <a href="{% url 'portfolio_details' portfolio_pk%}">Buys History</a>
+    <a href="{% url 'portfolio_details' portfolio_pk%}">Portfolio</a>
     <hr>
     {% for sale in object_list %}
         <p>Ticker Symbol: {{ sale.stock.symbol }}</p>

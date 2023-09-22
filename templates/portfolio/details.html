@@ -10,20 +10,33 @@
     <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
     <h3>Investments</h3>
         {% for item in object.portfolioitem_set.all %}
-            <div style="border: 1px solid cadetblue;">
-                <p>{{ item.stock.name }}</p>
-                <p>Average Purchase Price: &dollar;{{ item.average_purchase_price }}</p>
-                <p>Shares: {{ item.quantity }}</p>
+            <div class="investment-container">
+                <div style="border: 1px solid cadetblue;">
+                    <p>{{ item.stock.name }}</p>
+                    <p id="{{ item.stock.symbol }} avg_price">Average Purchase Price: &dollar;{{ item.average_purchase_price }}</p>
+                    <p>Shares: {{ item.quantity }}</p>
+                </div>
+                <button id="{{ item.stock.symbol }}btn" class="refresh btn">Refresh Price</button>
+                <div>
+                    <p id="{{ item.stock.symbol }} price">Current Price: &dollar;
+                        <span class="{{ item.stock.symbol }} current-price"></span>
+                    </p>
+                </div>
+                <button id="{{ item.stock.symbol }} pnl-btn" class="{{ item.stock.symbol }} pnl btn">Calculate P&L</button>
+                <div>
+                    <p id="pnl text">P&L:
+                        <span id="{{ item.stock.symbol }} pnl-percentage" class="{{ item.stock.symbol }} current-pnl">-%</span>
+                    </p>
+                </div>
+                <a href="{% url 'buy_stock' object.pk item.stock.symbol %}">Buy</a>
+                <a href="{% url 'sell_stock' object.pk item.stock.symbol %}">Sell</a>
+                <a href="{% url 'remove_stock' object.pk item.stock.symbol %}">Remove</a>
             </div>
-            <button id="{{ item.stock.symbol }}btn" class="refresh btn">Refresh Price</button>
-            <div><p id="{{ item.stock.symbol }} price">Current Price: &dollar;</p></div>
-            <a href="{% url 'buy_stock' object.pk item.stock.symbol %}">Buy</a>
-            <a href="{% url 'sell_stock' object.pk item.stock.symbol %}">Sell</a>
-            <a href="{% url 'remove_stock' object.pk item.stock.symbol %}">Remove</a>
         {% empty %}
             <p>No investments!</p>
         {% endfor %}
     </div>
     <a href="{% url 'add_stock' request.user.profile.portfolio.pk %}">Add Position</a>
     <script src="{% static 'js/refreshQuotes.js' %}"></script>
+    <script src="{% static 'js/calculatePnl.js' %}"></script>
 {% endblock %}

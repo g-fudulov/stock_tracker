@@ -1,13 +1,18 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block page_content %}
-  <h1>Sell {{ portfolio_item.stock.name }}</h1>
+    <h1>Sell {{ portfolio_item.stock.name }}</h1>
     <h3>Your position in {{ portfolio_item.stock.symbol }} will be reduced or sold completely. The profits or losses will be recorded!</h3>
-  <form method="post">
+    <form method="post">
     {% csrf_token %}
-      <p>{{ portfolio_item.stock.symbol }}</p>
+      <p class="symbol paragraph">{{ portfolio_item.stock.symbol }}</p>
       <p>Available Shares: {{ portfolio_item.quantity }}</p>
       <p>Average Purchase Price: &dollar;{{ portfolio_item.average_purchase_price }}</p>
     {{ form.as_p }}
+      <p>
+          <button type="button" id="request-price"> Show Current Price</button>
+      </p>
     <button type="submit">Confirm Sell</button>
-  </form>
+    </form>
+    <script src="{% static 'js/refreshPrice.js' %}"></script>
 {% endblock %}

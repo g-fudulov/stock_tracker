@@ -1,10 +1,15 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block page_content %}
-  <h1>Buy {{ portfolio_item.stock.name }}</h1>
-  <form method="post">
-    {% csrf_token %}
-      <p>{{ portfolio_item.stock.symbol }}</p>
-    {{ form.as_p }}
-    <button type="submit">Confirm Buy</button>
-  </form>
+    <h1>Buy {{ portfolio_item.stock.name }}</h1>
+    <form method="post">
+        {% csrf_token %}
+        <p class="symbol paragraph">{{ portfolio_item.stock.symbol }}</p>
+        {{ form.as_p }}
+        <p>
+            <button type="button" id="request-price"> Show Current Price</button>
+        </p>
+        <button type="submit">Confirm Buy</button>
+    </form>
+    <script src="{% static 'js/refreshPrice.js' %}"></script>
 {% endblock %}

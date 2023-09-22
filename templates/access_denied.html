@@ -1,2 +1,17 @@
-<p>No access!</p>
-<a href="{% url 'homepage' %}">Go Home</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Portfolio Tracker</title>
+</head>
+<body>
+<main>
+    {% if error %}
+        <p>{{ error }}</p>
+    {% else %}
+    <p>No access!</p>
+    {% endif %}
+    <a href="{% url 'homepage' %}">Go Home</a>
+</main>
+</body>
+</html>
