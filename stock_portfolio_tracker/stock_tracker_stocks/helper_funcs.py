@@ -28,23 +28,28 @@ def check_stock_exists(symbol):
         return False
 
 
+def format_float(number):
+    formatted_number = "{:.2f}".format(number)
+    return float(formatted_number)
+
+
 def calculate_avg_price_per_share_buy(existing_quantity, bought_quantity, existing_avg_price, bought_price):
     total_quantity = existing_quantity + bought_quantity
     total_cost = ((existing_quantity * existing_avg_price) + (bought_quantity * bought_price))
     average_purchase_price = total_cost / total_quantity
 
-    return average_purchase_price, total_quantity
+    return format_float(average_purchase_price), format_float(total_quantity)
 
 
 def calculate_realised_pnl(existing_pnl, existing_avg_price, selling_price, selling_quantity):
     realised_pnl = (selling_price - existing_avg_price) * selling_quantity
     new_pnl = existing_pnl + realised_pnl
 
-    return new_pnl
+    return format_float(new_pnl)
 
 
 def update_quantity(existing_quantity, selling_quantity):
     remaining_quantity = existing_quantity - selling_quantity
     new_quantity = remaining_quantity
 
-    return new_quantity
+    return format_float(new_quantity)

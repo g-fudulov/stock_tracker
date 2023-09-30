@@ -11,7 +11,7 @@
         <p>Name: {{ buy.stock.name }}</p>
         <p>Date: {{ buy.date }}</p>
         <p>Shares: {{ buy.quantity_bought }}</p>
-        <p>Price: {{ buy.buy_price }}</p>
+        <p>Price: &dollar;{{ buy.buy_price }}</p>
         <hr>
     {% empty%}
         <p>No buys recorded!</p>

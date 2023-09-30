@@ -6,4 +6,5 @@
     <p>Address Name: {{ object.address }}</p>
     <p>Created On: {{ object.created }}</p>
     <a href="{% url 'profile_update' request.user.profile.pk %}">Update Personal Details</a>
+    <a href="{% url 'delete_user' request.user.pk %}">Delete Profile</a>
 {% endblock %}

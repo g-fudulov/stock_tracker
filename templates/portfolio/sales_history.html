@@ -11,7 +11,7 @@
         <p>Name: {{ sale.stock.name }}</p>
         <p>Date: {{ sale.date }}</p>
         <p>Shares: {{ sale.quantity_sold }}</p>
-        <p>Price: {{ sale.sale_price }}</p>
+        <p>Price: &dollar;{{ sale.sale_price }}</p>
         <hr>
     {% empty%}
         <p>No sales recorded!</p>
