@@ -7,4 +7,4 @@ from stock_portfolio_tracker.stock_tracker_stocks.models import Portfolio
 @receiver(post_save, sender=Profile)
 def create_empty_portfolio(sender, instance, created, **kwargs):
     if created:
-        Portfolio.objects.create(owner=instance)
+        Portfolio.objects.create(owner=instance, invested=0)

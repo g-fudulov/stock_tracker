@@ -16,6 +16,7 @@ class Portfolio(models.Model):
     owner = models.OneToOneField(Profile, on_delete=models.CASCADE)
     stocks = models.ManyToManyField("Stock", through='PortfolioItem')
     realised_pnl = models.FloatField(default=0)
+    invested = models.FloatField(default=0, null=True)
 
     def __str__(self):
         return f"Portfolio of {self.owner.user.email}"

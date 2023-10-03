@@ -1,42 +1,50 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block page_content %}
-    <h1>Portfolio</h1>
-    <p class="portfolio total-value">Value: &dollar;</p>
-    <p>Realised P&L: &dollar;{{ object.realised_pnl }}</p>
-    <a href="{% url 'sales_details' object.owner_id object.pk %}">Sales History</a>
-    <a href="{% url 'buys_details' object.owner_id object.pk %}">Buys History</a>
+{#    https://www.google.com/search?q=stock+portfolio&tbm=isch&ved=2ahUKEwiF2obcu9SBAxXh8rsIHSJ3C7kQ2-cCegQIABAA&oq=stock+portfolio&gs_lcp=CgNpbWcQARgAMgcIABATEIAEMgcIABATEIAEMgcIABATEIAEMgcIABATEIAEMgcIABATEIAEMgcIABATEIAEMgcIABATEIAEMgcIABATEIAEMgcIABATEIAEMgcIABATEIAEOgQIIxAnOgUIABCABDoICAAQBxAeEBM6BggAEAcQHlCTFVjnI2CbNGgAcAB4AIABdogBjgWSAQM2LjGYAQCgAQGqAQtnd3Mtd2l6LWltZ8ABAQ&sclient=img&ei=izIZZcXoIOHl7_UPou6tyAs&bih=923&biw=1920#imgrc=-lssOrSiW844DM#}
+    <div class="portfolio top wrapper">
+        <p class="number">Invested: <span class="portfolio number">&dollar;{{ object.invested }}</span></p>
+        <p class="number">Realised P&L: <span class="portfolio number">&dollar;{{ object.realised_pnl }}</span></p>
+        <div class="wrapper history btns">
+            <a href="{% url 'sales_details' object.owner_id object.pk %}" class="custom a">Sales History</a>
+            <a href="{% url 'buys_details' object.owner_id object.pk %}" class="custom a">Buys History</a>
+        </div>
+    </div>
     <hr>
-    <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
-    <h3>Investments</h3>
+    <a href="{% url 'add_stock' request.user.profile.portfolio.pk %}" class="custom a" style="margin-left: 10px;">Add New Position</a>
+    <div class="quotes wrapper">
         {% for item in object.portfolioitem_set.all %}
-            <div class="investment-container">
-                <div style="border: 1px solid cadetblue;">
-                    <p>{{ item.stock.name }}</p>
-                    <p id="{{ item.stock.symbol }} avg_price">Average Purchase Price: &dollar;{{ item.average_purchase_price }}</p>
-                    <p id="{{ item.stock.symbol }} shares">Shares: {{ item.quantity }}</p>
-                </div>
-                <button id="{{ item.stock.symbol }}btn" class="refresh btn btn-primary">Refresh Price</button>
-                <div>
-                    <p id="{{ item.stock.symbol }} price">Current Price: &dollar;
-                        <span class="{{ item.stock.symbol }} current-price"></span>
+            <div class="investment-container wrapper">
+                <div class="investment-row one wrapper">
+                    <p class="stock symbol">{{ item.stock.symbol }}</p>
+                    <p id="{{ item.stock.symbol }} avg_price" class="number center">Average Purchase Price: &dollar;{{ item.average_purchase_price }}</p>
+                    <p id="{{ item.stock.symbol }} price" class="number">Current Price: &dollar;<span class="{{ item.stock.symbol }} current-price number"></span>
                     </p>
                 </div>
-                <button id="{{ item.stock.symbol }} pnl-btn" class="{{ item.stock.symbol }} pnl btn btn-primary">Calculate P&L</button>
-                <div>
-                    <p id="pnl text">P&L:
-                        <span id="{{ item.stock.symbol }} pnl-percentage" class="{{ item.stock.symbol }} current-pnl">-%</span>
+                <div class="investment-row two wrapper">
+                    <p class="lower">{{ item.stock.name }}</p>
+                    <p id="{{ item.stock.symbol }} shares" class="number center lower">Shares: {{ item.quantity }}</p>
+                    <p id="pnl text" class="number">P&L:
+                        <span id="{{ item.stock.symbol }} pnl-percentage" class="{{ item.stock.symbol }} current-pnl number">-%</span>
                     </p>
                 </div>
-                <a href="{% url 'buy_stock' object.pk item.stock.symbol %}" class="btn btn-primary">Buy</a>
-                <a href="{% url 'sell_stock' object.pk item.stock.symbol %}" class="btn btn-primary">Sell</a>
-                <a href="{% url 'remove_stock' object.pk item.stock.symbol %}" class="btn btn-primary">Remove</a>
+                <div class="refresh-btns wrapper">
+                    <div class="refresh-btns-nested wrapper">
+                        <button id="{{ item.stock.symbol }}btn" class="refresh btn btn-primary">Refresh Price</button>
+                        <button id="{{ item.stock.symbol }} pnl-btn" class="{{ item.stock.symbol }} pnl btn btn-primary">Calculate P&L</button>
+                    </div>
+                </div>
+                <div class="investment-btns wrapper">
+                    <a href="{% url 'buy_stock' object.pk item.stock.symbol %}" class="btn btn-primary">Buy</a>
+                    <a href="{% url 'sell_stock' object.pk item.stock.symbol %}" class="btn btn-primary">Sell</a>
+                    <a href="{% url 'remove_stock' object.pk item.stock.symbol %}" class="btn btn-primary">Remove</a>
+                </div>
             </div>
         {% empty %}
-            <p>No investments!</p>
+            <p class="stock symbol">No investments!</p>
+            <a href="{% url 'add_stock' request.user.profile.portfolio.pk %}" class="custom a">Add New Position</a>
         {% endfor %}
     </div>
-    <a href="{% url 'add_stock' request.user.profile.portfolio.pk %}">Add New Position</a>
     <script src="{% static 'js/refreshQuotes.js' %}"></script>
     <script src="{% static 'js/calculatePnl.js' %}"></script>
 {% endblock %}

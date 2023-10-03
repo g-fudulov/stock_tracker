@@ -109,7 +109,7 @@ def buy_stock(request, portfolio_pk, stock_symbol):
             portfolio_item.quantity = new_quantity
             portfolio_item.save()
 
-            # Create a new buy record
+            # Creates a new buy record
             profile = get_object_or_404(Profile, portfolio=portfolio)
             Buy.objects.create(
                 initiator=profile,
@@ -117,6 +117,10 @@ def buy_stock(request, portfolio_pk, stock_symbol):
                 quantity_bought=form.cleaned_data['quantity'],
                 buy_price=form.cleaned_data['price'],
             )
+
+            # Updates the total invested amount
+            portfolio.invested += helper_funcs.format_float(form.cleaned_data['quantity'] * form.cleaned_data['price'])
+            portfolio.save()
 
             return redirect('portfolio_details', portfolio_pk=portfolio_pk)
 
@@ -192,6 +196,13 @@ def sell_stock(request, portfolio_pk, stock_symbol):
             portfolio.realised_pnl = realised_pnl
             portfolio.save()
 
+            # Updates the total invested
+            average_price = portfolio_item.average_purchase_price
+            portfolio.invested -= helper_funcs.format_float(average_price * sell_quantity)
+            if portfolio.invested <= 0.02:
+                portfolio.invested = 0
+            portfolio.save()
+
             if sell_quantity == portfolio_item.quantity:
                 # Sold all shares, remove the portfolio item
                 portfolio_item.delete()
@@ -204,7 +215,7 @@ def sell_stock(request, portfolio_pk, stock_symbol):
                 portfolio_item.quantity = new_quantity
                 portfolio_item.save()
 
-            # Create a new sale record
+            # Creates a new sale record
             profile = get_object_or_404(Profile, portfolio=portfolio)
             Sale.objects.create(
                 initiator=profile,
