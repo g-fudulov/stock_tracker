@@ -1,10 +1,15 @@
 {% extends 'base.html' %}
 {% block page_content %}
-    <h2>Profile Details</h2>
-    <p>First Name: {{ object.first_name }}</p>
-    <p>Last Name: {{ object.last_name }}</p>
-    <p>Address Name: {{ object.address }}</p>
-    <p>Created On: {{ object.created }}</p>
-    <a href="{% url 'profile_update' request.user.profile.pk %}">Update Personal Details</a>
-    <a href="{% url 'delete_user' request.user.pk %}">Delete Profile</a>
+    <div class="wrapper portfolio info">
+        <h2>Profile Details</h2>
+        <p>First Name: <span class="portfolio value">{{ object.first_name }}</span></p>
+        <p>Last Name: <span class="portfolio value">{{ object.last_name }}</span></p>
+        <p>Address Name: <span class="portfolio value">{{ object.address }}</span></p>
+        <p>Created On: <span class="portfolio value">{{ object.created }}</span></p>
+        <p>Email: <span class="portfolio value">{{ object.user.email }}</span></p>
+    </div>
+    <div class="wrapper portfolio btns">
+        <a href="{% url 'profile_update' request.user.profile.pk %}" class="custom a">Update Personal Details</a>
+        <a href="{% url 'delete_user' request.user.pk %}" class="custom a">Delete Profile</a>
+    </div>
 {% endblock %}

@@ -1,19 +1,27 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block page_content %}
-    <h1>Portfolio Sales</h1>
-    <p>Realised P&L: &dollar;{{ realised_pnl }}</p>
-    <a href="{% url 'buys_details' profile_pk portfolio_pk %}">Buys History</a>
-    <a href="{% url 'portfolio_details' portfolio_pk%}">Portfolio</a>
-    <hr>
-    {% for sale in object_list %}
-        <p>Ticker Symbol: {{ sale.stock.symbol }}</p>
-        <p>Name: {{ sale.stock.name }}</p>
-        <p>Date: {{ sale.date }}</p>
-        <p>Shares: {{ sale.quantity_sold }}</p>
-        <p>Price: &dollar;{{ sale.sale_price }}</p>
-        <hr>
-    {% empty%}
-        <p>No sales recorded!</p>
-    {% endfor %}
+    <section class="history-top wrapper actions">
+        <h2>Portfolio Sales</h2>
+        <p>Realised P&L: &dollar;{{ realised_pnl }}</p>
+        <a href="{% url 'buys_details' profile_pk portfolio_pk %}" class="custom a">Buys History</a>
+        <a href="{% url 'portfolio_details' portfolio_pk%}" class="custom a">Portfolio</a>
+    </section>
+    <section class="history-bottom wrapper actions">
+        {% for sale in object_list %}
+            <div class="history-inner wrapper actions">
+                <div class="history-inner-left wrapper actions">
+                    <p>Ticker Symbol: <span class="portfolio value">{{ sale.stock.symbol }}</span></p>
+                    <p>Name: <span class="portfolio value">{{ sale.stock.name }}</span></p>
+                    <p>Date: <span class="portfolio value">{{ sale.date }}</span></p>
+                </div>
+                <div class="history-inner-right wrapper actions">
+                    <p>Shares: <span class="portfolio value">{{ sale.quantity_sold }}</span></p>
+                    <p>Price: <span class="portfolio value">&dollar;{{ sale.sale_price }}</span></p>
+                </div>
+            </div>
+        {% empty%}
+            <p class="warning" style="color: #cccccc">No sales recorded!</p>
+        {% endfor %}
+    </section>
 {% endblock %}
