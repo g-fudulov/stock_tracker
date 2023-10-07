@@ -1,18 +1,31 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block page_content %}
-    <h1>Sell {{ portfolio_item.stock.name }}</h1>
-    <h3>Your position in {{ portfolio_item.stock.symbol }} will be reduced or sold completely. The profits or losses will be recorded!</h3>
-    <form method="post">
-    {% csrf_token %}
-      <p class="symbol paragraph">{{ portfolio_item.stock.symbol }}</p>
-      <p>Available Shares: {{ portfolio_item.quantity }}</p>
-      <p>Average Purchase Price: &dollar;{{ portfolio_item.average_purchase_price }}</p>
-    {{ form.as_p }}
-      <p>
-          <button type="button" id="request-price"> Show Current Price</button>
-      </p>
-    <button type="submit">Confirm Sell</button>
-    </form>
+    <section class="heading wrapper col">
+        <h2>Sell {{ portfolio_item.stock.name }}</h2>
+        <p class="warning">
+            Your position in
+            {{ portfolio_item.stock.symbol }}
+            will be reduced or sold completely.
+            The profits or losses will be recorded!
+        </p>
+        </section>
+    <section class="bottom">
+        <form method="post" class="wrapper orders col">
+            {% csrf_token %}
+              <p class="symbol paragraph">
+                  <span class="portfolio value">{{ portfolio_item.stock.symbol }}</span>
+              </p>
+            <p>Available Shares:
+                <span class="portfolio value number">{{ portfolio_item.quantity }}</span>
+            </p>
+            <p>Average Purchase Price:
+                <span class="portfolio value number">&dollar;{{ portfolio_item.average_purchase_price }}</span>
+            </p>
+            {{ form.as_p }}
+            <button type="button" id="request-price" class="btn btn-primary"> Show Current Price</button>
+            <button type="submit" class="btn btn-primary">Confirm Sell</button>
+        </form>
+    </section>
     <script src="{% static 'js/refreshPrice.js' %}"></script>
 {% endblock %}

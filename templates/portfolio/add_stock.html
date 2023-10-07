@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block page_content %}
+    <section class="heading wrapper">
+        <h2>Add Stock to Portfolio</h2>
+    </section>
+    <section class="bottom">
+        <form method="post" class="wrapper orders">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Add Stock</button>
+        </form>
+    </section>
+{% endblock %}

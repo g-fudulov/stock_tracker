@@ -77,7 +77,7 @@ def add_stock_to_portfolio(request, portfolio_pk):
 
             return redirect('buy_stock', portfolio_pk=portfolio_pk, stock_symbol=parsed_symbol)
 
-    return render(request, 'portfolio/search_stock.html', {"form": form})
+    return render(request, 'portfolio/add_stock.html', {"form": form})
 
 
 @login_required(login_url=reverse_lazy('login_user'))
@@ -128,6 +128,9 @@ def buy_stock(request, portfolio_pk, stock_symbol):
 
 
 class RemoveStock(LoginRequiredMixin, UserPassesTestMixin, views.DeleteView):
+    """Does not subtract removed value of the total invested amount"""
+    # TODO: FIX RemoveStock
+
     template_name = "portfolio/remove.html"
 
     def get_success_url(self):

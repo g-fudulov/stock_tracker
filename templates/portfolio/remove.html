@@ -1,10 +1,14 @@
 {% extends 'base.html' %}
 {% block page_content %}
-  <h1>Remove {{ object.stock.name }}</h1>
-    <h3>Your position in {{ object.stock.name }} will be removed. No profits or losses will be recorded!</h3>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Confirm</button>
-  </form>
+    <section class="heading wrapper col">
+        <h2>Remove {{ object.stock.name }}</h2>
+        <p class="warning">Your position in {{ object.stock.name }} will be removed. No profits or losses will be recorded!</p>
+    </section>
+    <section class="bottom">
+        <form method="post" class="wrapper orders">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Confirm</button>
+        </form>
+    </section>
 {% endblock %}

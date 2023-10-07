@@ -1,9 +1,0 @@
-{% extends 'base.html' %}
-{% block page_content %}
-  <h1>Add Stock to Portfolio</h1>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Continue</button>
-  </form>
-{% endblock %}
