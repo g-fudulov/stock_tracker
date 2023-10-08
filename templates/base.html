@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="{% static 'css/profile.css' %}">
     <link rel="stylesheet" href="{% static 'css/history.css' %}">
     <link rel="stylesheet" href="{% static 'css/orders.css' %}">
+    <link rel="stylesheet" href="{% static 'css/login_register.css' %}">
 </head>
 <body>
     <header class="wrapper">
@@ -26,13 +27,13 @@
             </div>
         </a>
         {% if request.user.is_anonymous %}
-            <a href="{% url 'register_user' %}" style="margin-left: auto;">Register</a>
+            <a href="{% url 'register_user' %}" >Register</a>
             <h1 class="heading">Portfolio Tracker</h1>
-            <a href="{% url 'login_user' %}" style="justify-self: flex-end; margin-left: auto;">Login</a>
+            <a href="{% url 'login_user' %}" >Login</a>
         {% else %}
             <a href="{% url 'portfolio_details' request.user.profile.portfolio.pk %}">My Portfolio</a>
             <h1 class="heading">Portfolio Tracker</h1>
-            <a href="{% url 'logout_user' %}">Logout</a>
+            <a href="{% url 'logout_user' %}">Logout</a> {# Remove logout #}
             <a href="{% url 'profile_details' request.user.profile.pk %}">{{ request.user }}</a>
         {% endif %}
     </header>

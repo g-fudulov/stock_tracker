@@ -8,3 +8,7 @@ class CustomRegisterUserForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = UserModel
         fields = ('email', )
+
+    error_messages = {
+        'password_mismatch': 'The passwords do not match.'
+    }

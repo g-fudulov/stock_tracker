@@ -1,9 +1,13 @@
 {% extends 'base.html' %}
 {% block page_content %}
-  <h1>Change Email</h1>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Submit</button>
-  </form>
+    <section class="heading wrapper">
+        <h2>Change Email</h2>
+    </section>
+    <section class="bottom wrapper form">
+        <form method="post" class="wrapper form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </section>
 {% endblock %}

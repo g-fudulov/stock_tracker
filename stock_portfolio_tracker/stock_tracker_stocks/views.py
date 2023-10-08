@@ -128,8 +128,6 @@ def buy_stock(request, portfolio_pk, stock_symbol):
 
 
 class RemoveStock(LoginRequiredMixin, UserPassesTestMixin, views.DeleteView):
-    """Does not subtract removed value of the total invested amount"""
-    # TODO: FIX RemoveStock
 
     template_name = "portfolio/remove.html"
 
@@ -157,6 +155,16 @@ class RemoveStock(LoginRequiredMixin, UserPassesTestMixin, views.DeleteView):
             {"error": 'You are not the owner of this portfolio!'},
             status=404
         )
+
+    def form_valid(self, form):
+        portfolio_item = self.get_object()
+        portfolio = get_object_or_404(Portfolio, pk=self.kwargs['portfolio_pk'])
+
+        portfolio.invested -= portfolio_item.quantity * portfolio_item.average_purchase_price
+        portfolio.save()
+        portfolio_item.delete()
+        
+        return super().form_valid(form)
 
 
 @login_required(login_url=reverse_lazy("login_user"))

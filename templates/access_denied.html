@@ -1,18 +1,23 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>404</title>
+    <link rel="stylesheet" href="{% static 'css/portfolio.css' %}">
+    <link rel="stylesheet" href="{% static 'css/404.css' %}">
 </head>
 <body>
 <main>
-    {% if error %}
-        <p>{{ error }}</p>
-    {% else %}
-    <p>No access!</p>
-    {% endif %}
-    <a href="{% url 'homepage' %}">Go Home</a>
+    <section class="error wrapper">
+        {% if error %}
+            <p class="warning">{{ error }}</p>
+        {% else %}
+        <p class="warning">No access!</p>
+        {% endif %}
+        <a href="{% url 'homepage' %}" class="custom a">Go Home</a>
+    </section>
 </main>
 </body>
 </html>

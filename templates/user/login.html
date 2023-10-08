@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 {% block page_content %}
-    <div class="my form wrapper">
-        <h1>Login</h1>
-        <form method="post" action="{% url 'login_user' %}">
+    <section class="heading wrapper">
+        <h2>Login</h2>
+    </section>
+    <section class="bottom wrapper form">
+        <form method="post" action="{% url 'login_user' %}" class="wrapper form">
             {% csrf_token %}
-            <div class="my elements-form wrapper">
-                {{ form.as_p }}
-            </div>
+            {{ form.as_p }}
             <input type="hidden" name="next" value="{{ next }}">
-            <button>LogIn</button>
+            <button type="submit" class="btn btn-primary">Login</button>
         </form>
-    </div>
+    </section>
 {% endblock %}

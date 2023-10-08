@@ -36,7 +36,12 @@ class UserManager(BaseUserManager):
 
 
 class MyUser(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(blank=False, null=False, unique=True)
+    email = models.EmailField(
+        blank=False,
+        null=False,
+        unique=True,
+        error_messages={'unique': 'User with this email address already exists.'}
+    )
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
