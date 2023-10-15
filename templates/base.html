@@ -18,24 +18,29 @@
     <link rel="stylesheet" href="{% static 'css/history.css' %}">
     <link rel="stylesheet" href="{% static 'css/orders.css' %}">
     <link rel="stylesheet" href="{% static 'css/login_register.css' %}">
+    <link rel="stylesheet" href="{% static 'css/homepage.css' %}">
+    <script defer src="{% static 'js/scrollAnimation.js' %}"></script>
+    <script defer src="{% static 'js/panning_animation.js' %}"></script>
 </head>
 <body>
-    <header class="wrapper">
-        <a href="{% url 'homepage' %}">
-            <div class="img wrapper">
-                <img src="{% static 'images/512x512bb.jpg' %}" alt="site logo">
-            </div>
-        </a>
-        {% if request.user.is_anonymous %}
-            <a href="{% url 'register_user' %}" >Register</a>
-            <h1 class="heading">Portfolio Tracker</h1>
-            <a href="{% url 'login_user' %}" >Login</a>
-        {% else %}
-            <a href="{% url 'portfolio_details' request.user.profile.portfolio.pk %}">My Portfolio</a>
-            <h1 class="heading">Portfolio Tracker</h1>
-            <a href="{% url 'logout_user' %}">Logout</a> {# Remove logout #}
-            <a href="{% url 'profile_details' request.user.profile.pk %}">{{ request.user }}</a>
-        {% endif %}
+    <header class="wrapper" style="z-index: 100;">
+        <div class="left-section wrapper">
+            <a href="{% url 'homepage' %}">
+                <div class="img wrapper">
+                    <img src="{% static 'images/512x512bb.jpg' %}" alt="site logo" draggable="false">
+                </div>
+            </a>
+            {% if request.user.is_anonymous %}
+                <a href="{% url 'register_user' %}">Register</a>
+                </div>
+                <h1 class="heading">Portfolio Tracker</h1>
+                <a href="{% url 'login_user' %}" >Login</a>
+            {% else %}
+                <a href="{% url 'portfolio_details' request.user.profile.portfolio.pk %}">My Portfolio</a>
+                </div>
+                <h1 class="heading">Portfolio Tracker</h1>
+                <a href="{% url 'profile_details' request.user.profile.pk %}">{{ request.user }}</a>
+            {% endif %}
     </header>
     <main>
         {% block page_content %}

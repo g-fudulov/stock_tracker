@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% block page_content %}
-    <section class="heading wrapper col">
+    <section class="heading wrapper col hidden">
         <h2>Remove {{ object.stock.name }}</h2>
         <p class="warning">Your position in {{ object.stock.name }} will be removed. No profits or losses will be recorded!</p>
     </section>
-    <section class="bottom">
+    <section class="bottom hidden">
         <form method="post" class="wrapper orders">
             {% csrf_token %}
             {{ form.as_p }}

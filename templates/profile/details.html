@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block page_content %}
-    <section class="wrapper portfolio info">
+    <section class="wrapper portfolio info hidden">
         <h2>Profile Details</h2>
         <p>First Name: <span class="portfolio value">{{ object.first_name }}</span></p>
         <p>Last Name: <span class="portfolio value">{{ object.last_name }}</span></p>
@@ -8,12 +8,15 @@
         <p>Created On: <span class="portfolio value">{{ object.created }}</span></p>
         <p>Email: <span class="portfolio value">{{ object.user.email }}</span></p>
     </section>
-    <section class="wrapper portfolio btns">
+    <section class="wrapper portfolio btns hidden">
         <a href="{% url 'profile_update' request.user.profile.pk %}" class="custom a">Update Personal Details</a>
         <a href="{% url 'delete_user' request.user.pk %}" class="custom a">Delete Profile</a>
     </section>
-    <section class="wrapper portfolio btns">
+    <section class="wrapper portfolio btns hidden">
         <a href="{% url 'change_email' request.user.pk %}" class="custom a">Change Email</a>
         <a href="{% url 'change_password' request.user.pk %}" class="custom a">Change Password</a>
+    </section>
+    <section class="wrapper portfolio btns hidden">
+        <a href="{% url 'logout_user' %}" class="custom a logout">Logout</a>
     </section>
 {% endblock %}

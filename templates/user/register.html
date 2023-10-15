@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% block page_content %}
-    <section class="heading wrapper">
+    <section class="heading wrapper hidden">
         <h2>Register</h2>
     </section>
-    <section class="bottom wrapper form">
+    <section class="bottom wrapper form hidden">
         <form method="post" action="{% url 'register_user' %}" class="wrapper form" style="align-items: center;">
             {% csrf_token %}
             {{ form.as_p }}

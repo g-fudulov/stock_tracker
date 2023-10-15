@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block page_content %}
-    <section class="portfolio top wrapper">
+    <section class="portfolio top wrapper hidden">
         <p class="number">Invested: <span class="portfolio number">&dollar;{{ object.invested }}</span></p>
         <p class="number">Realised P&L: <span class="portfolio number">&dollar;{{ object.realised_pnl }}</span></p>
         <div class="wrapper history btns">
@@ -10,8 +10,11 @@
         </div>
     </section>
     <hr>
-    <a href="{% url 'add_stock' request.user.profile.portfolio.pk %}" class="custom a" style="margin-left: 10px;">Add New Position</a>
-    <section class="quotes wrapper">
+    <section class="middle-portfolio wrapper hidden">
+        <a href="{% url 'add_stock' request.user.profile.portfolio.pk %}" class="custom a">Add New Position</a>
+        <a href="{% url 'reset_portfolio' request.user.pk request.user.profile.portfolio.pk %}" class="custom a">Reset Portfolio</a>
+    </section>
+    <section class="quotes wrapper hidden">
         {% for item in object.portfolioitem_set.all %}
             <div class="investment-container wrapper">
                 <div class="investment-row one wrapper">
@@ -40,7 +43,7 @@
                 </div>
             </div>
         {% empty %}
-            <div style="display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 20px">
+            <div style="display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 20px" class="hidden">
                 <p class="stock symbol">No investments!</p>
                 <a href="{% url 'add_stock' request.user.profile.portfolio.pk %}" class="custom a">Add New Position</a>
             </div>

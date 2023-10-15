@@ -26,3 +26,7 @@ class SellStockForm(forms.Form):
                              widget=forms.NumberInput(attrs={'placeholder': '$'})
                              )
     quantity = forms.FloatField(required=True, label='Shares')
+
+
+class ResetPortfolio(forms.Form):
+    reset = forms.BooleanField(required=True, initial=False, label="Confirm")

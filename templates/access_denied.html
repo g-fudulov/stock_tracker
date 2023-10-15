@@ -10,11 +10,11 @@
 </head>
 <body>
 <main>
-    <section class="error wrapper">
+    <section class="error wrapper hidden">
         {% if error %}
             <p class="warning">{{ error }}</p>
         {% else %}
-        <p class="warning">No access!</p>
+        <p class="warning hidden">No access!</p>
         {% endif %}
         <a href="{% url 'homepage' %}" class="custom a">Go Home</a>
     </section>

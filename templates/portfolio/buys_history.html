@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block page_content %}
-    <section class="history-top wrapper actions">
+    <section class="history-top wrapper actions hidden">
         <h2>Portfolio Buys</h2>
         <p>Realised P&L: &dollar;{{ realised_pnl }}</p>
         <a href="{% url 'sales_details' profile_pk portfolio_pk %}" class="custom a">Sales History</a>
         <a href="{% url 'portfolio_details' portfolio_pk%}" class="custom a">Portfolio</a>
     </section>
-    <section class="history-bottom wrapper actions">
+    <section class="history-bottom wrapper actions hidden">
         {% for buy in object_list %}
             <div class="history-inner wrapper actions">
                 <div class="history-inner-left wrapper actions">
@@ -21,7 +21,7 @@
                 </div>
             </div>
         {% empty%}
-            <p class="warning" style="color: #cccccc">No buys recorded!</p>
+            <p class="warning hidden" style="color: #cccccc">No buys recorded!</p>
         {% endfor %}
     </section>
 {% endblock %}

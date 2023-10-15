@@ -1,5 +1,49 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block page_content %}
-<p>Works</p>
+<section id="hero">
+    <div class="top-hero wrapper hidden extra">
+        <div class="top-inner-hero wrapper">
+            <div class="top-left-hero wrapper">
+                <h2 class="heading">
+                    Track Your Portfolio <br><span class="emphasis">The Easy Way</span>
+                </h2>
+                <p class="hero-desc">
+                    Single-handedly
+                    <span class="emphasis desc">THE BEST</span>
+                    tool to track your US investments
+                    <span class="emphasis desc">EVER</span>
+                </p>
+                <a href="{% url 'register_user' %}">
+                    <button class="btn btn-primary hero">Register Now</button>
+                </a>
+            </div>
+            <div class="top-right-hero wrapper">
+                <img src="{% static 'images/hero-image.jpg' %}"
+                     alt="hero image"
+                     class="hero image"
+                     draggable="false"
+                >
+            </div>
+        </div>
+        <div class="top-bottom-hero wrapper">
+            <p><span class="emphasis desc">Stop</span> using old
+                books and Exel spreadsheets and go with
+                <span class="emphasis desc">Portfolio Tracker</span>
+            </p>
+        </div>
+    </div>
+</section>
+    <div class="middle-hero-heading wrapper">
+        <h2 class="middle-heading">Take a look</h2>
+    </div>
+<section class="middle-hero wrapper" data-mouse-down-at="0" data-prev-percentage="0">
+    <div id="image-track" class="wrapper">
+        <img src="{% static 'images/image_track/portfolio.png' %}" alt="middle image" draggable="false" class="hidden extra">
+        <img src="{% static 'images/image_track/register.png' %}" alt="middle image" draggable="false" class="hidden extra">
+        <img src="{% static 'images/image_track/history.png' %}" alt="middle image" draggable="false" class="hidden extra">
+        <img src="{% static 'images/image_track/profile.png' %}" alt="middle image" draggable="false" class="hidden extra">
+        <img src="{% static 'images/image_track/buy.png' %}" alt="middle image" draggable="false" class="hidden extra">
+    </div>
+</section>
 {% endblock %}

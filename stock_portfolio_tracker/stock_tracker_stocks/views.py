@@ -7,7 +7,7 @@ from stock_portfolio_tracker.stock_tracker_stocks.models import Portfolio, Portf
 from django.views import generic as views
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from stock_portfolio_tracker.stock_tracker_stocks.forms import BuyStockForm, SearchStockForm, SellStockForm
+from stock_portfolio_tracker.stock_tracker_stocks.forms import BuyStockForm, SearchStockForm, SellStockForm, ResetPortfolio
 from stock_portfolio_tracker.stock_tracker_stocks import helper_funcs
 
 UserModel = get_user_model()
@@ -105,7 +105,7 @@ def buy_stock(request, portfolio_pk, stock_symbol):
                     existing_avg_price=portfolio_item.average_purchase_price,
                     bought_price=form.cleaned_data['price']
                 ))
-            portfolio_item.average_purchase_price = new_average_purchase_price
+            portfolio_item.average_purchase_price = helper_funcs.format_float(new_average_purchase_price)
             portfolio_item.quantity = new_quantity
             portfolio_item.save()
 
@@ -115,7 +115,7 @@ def buy_stock(request, portfolio_pk, stock_symbol):
                 initiator=profile,
                 stock=stock,
                 quantity_bought=form.cleaned_data['quantity'],
-                buy_price=form.cleaned_data['price'],
+                buy_price=helper_funcs.format_float(form.cleaned_data['price']),
             )
 
             # Updates the total invested amount
@@ -160,7 +160,7 @@ class RemoveStock(LoginRequiredMixin, UserPassesTestMixin, views.DeleteView):
         portfolio_item = self.get_object()
         portfolio = get_object_or_404(Portfolio, pk=self.kwargs['portfolio_pk'])
 
-        portfolio.invested -= portfolio_item.quantity * portfolio_item.average_purchase_price
+        portfolio.invested -= helper_funcs.format_float(portfolio_item.quantity * portfolio_item.average_purchase_price)
         portfolio.save()
         portfolio_item.delete()
         
@@ -191,7 +191,7 @@ def sell_stock(request, portfolio_pk, stock_symbol):
     if request.method == "POST":
         form = SellStockForm(request.POST)
         if form.is_valid():
-            sell_price = form.cleaned_data['price']
+            sell_price = helper_funcs.format_float(form.cleaned_data['price'])
             sell_quantity = form.cleaned_data['quantity']
 
             if sell_quantity > portfolio_item.quantity:
@@ -204,7 +204,7 @@ def sell_stock(request, portfolio_pk, stock_symbol):
                 selling_price=sell_price,
                 selling_quantity=sell_quantity
             )
-            portfolio.realised_pnl = realised_pnl
+            portfolio.realised_pnl = helper_funcs.format_float(realised_pnl)
             portfolio.save()
 
             # Updates the total invested
@@ -238,6 +238,45 @@ def sell_stock(request, portfolio_pk, stock_symbol):
             return redirect('portfolio_details', portfolio_pk=portfolio_pk)
 
     return render(request, 'portfolio/sell.html', {'form': form, 'portfolio_item': portfolio_item})
+
+
+@login_required(login_url=reverse_lazy("login_user"))
+def reset_portfolio(request, portfolio_pk, profile_pk):
+    portfolio = get_object_or_404(Portfolio, pk=portfolio_pk)
+
+    if request.user.pk != portfolio.owner.user_id:  # Check for access
+        return render(
+            request,
+            'access_denied.html',
+            {"error": 'You are not the owner of this portfolio!'}
+        )
+
+    form = ResetPortfolio()
+    if request.method == "POST":
+        form = ResetPortfolio(request.POST)
+        if form.is_valid():
+            response = form.cleaned_data['reset']
+            portfolio_items = PortfolioItem.objects.filter(portfolio=portfolio)
+            sales = Sale.objects.filter(initiator__id=profile_pk)
+            buys = Buy.objects.filter(initiator__id=profile_pk)
+            if response:
+                #  Delete P&L, Invested amount, Sales and Buys
+                portfolio.realised_pnl = 0
+                portfolio.invested = 0
+                portfolio.save()
+
+                for item in portfolio_items:
+                    item.delete()
+
+                for sale in sales:
+                    sale.delete()
+
+                for buy in buys:
+                    buy.delete()
+
+            return redirect('portfolio_details', portfolio_pk=portfolio_pk)
+
+    return render(request, 'portfolio/reset.html', {"form": form})
 
 
 class SalesDetails(LoginRequiredMixin, UserPassesTestMixin, views.ListView):

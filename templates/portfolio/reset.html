@@ -1,13 +1,11 @@
 {% extends 'base.html' %}
 {% block page_content %}
-    <section class="heading wrapper hidden">
-        <h2>Change Email</h2>
-    </section>
-    <section class="bottom wrapper form hidden">
-        <form method="post" class="wrapper form">
+    <div class="wrapper portfolio info hidden">
+        <h2>Reset Portfolio</h2>
+        <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
-    </section>
+    </div>
 {% endblock %}
