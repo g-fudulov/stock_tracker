@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block page_content %}
+<main>
     <section class="wrapper portfolio info hidden">
         <h2>Profile Details</h2>
         <p>First Name: <span class="portfolio value">{{ object.first_name }}</span></p>
@@ -19,4 +20,5 @@
     <section class="wrapper portfolio btns hidden">
         <a href="{% url 'logout_user' %}" class="custom a logout">Logout</a>
     </section>
+</main>
 {% endblock %}

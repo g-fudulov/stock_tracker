@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block page_content %}
+<main>
     <section class="history-top wrapper actions hidden">
         <h2>Portfolio Sales</h2>
         <p>Realised P&L: &dollar;{{ realised_pnl }}</p>
@@ -24,4 +25,5 @@
             <p class="warning" style="color: #cccccc">No sales recorded!</p>
         {% endfor %}
     </section>
+</main>
 {% endblock %}

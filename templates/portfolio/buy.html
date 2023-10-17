@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block page_content %}
+<main>
     <section class="heading wrapper hidden">
         <h2>Buy {{ portfolio_item.stock.name }}</h2>
     </section>
@@ -16,4 +17,5 @@
         </form>
     </section>
     <script src="{% static 'js/refreshPrice.js' %}"></script>
+</main>
 {% endblock %}

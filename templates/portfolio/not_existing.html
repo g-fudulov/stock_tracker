@@ -1,2 +1,19 @@
-<p>We do not support this stock</p>
-<a href="{% url 'homepage' %}">Go Home</a>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>404</title>
+     <link rel="stylesheet" href="{% static 'css/portfolio.css' %}">
+    <link rel="stylesheet" href="{% static 'css/404.css' %}">
+</head>
+<body>
+<main>
+    <section class="error wrapper hidden">
+        <p class="warning">We do not support this stock</p>
+        <a href="{% url 'homepage' %}" class="custom a">Go Home</a>
+    </section>
+</main>
+</body>
+</html>

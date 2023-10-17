@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block page_content %}
+<main>
     <section class="portfolio top wrapper hidden">
         <p class="number">Invested: <span class="portfolio number">&dollar;{{ object.invested }}</span></p>
         <p class="number">Realised P&L: <span class="portfolio number">&dollar;{{ object.realised_pnl }}</span></p>
@@ -49,6 +50,7 @@
             </div>
         {% endfor %}
     </section>
+</main>
     <script src="{% static 'js/refreshQuotes.js' %}"></script>
     <script src="{% static 'js/calculatePnl.js' %}"></script>
 {% endblock %}
