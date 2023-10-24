@@ -1,2 +1,6 @@
-static/
+staticfiles/
+static
 db.sqlite3
+envs/
+postgresql
+nginx/logs

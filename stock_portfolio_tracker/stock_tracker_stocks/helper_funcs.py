@@ -1,5 +1,15 @@
-from static import api_config
+import os
+
+from dotenv import load_dotenv
 import requests
+
+load_dotenv('envs/deploy.env')
+
+api_headers = {
+    "X-RapidAPI-Key": os.getenv("API_KEY", None),
+    "X-RapidAPI-Host": os.getenv("API_HOST", None)
+}
+api_url = 'https://twelve-data1.p.rapidapi.com/stocks'
 
 
 def check_stock_exists(symbol):
@@ -7,7 +17,7 @@ def check_stock_exists(symbol):
 
     try:
         # Make a GET request to the API
-        response = requests.get(api_config.url, headers=api_config.headers, params=querystring)
+        response = requests.get(api_url, headers=api_headers, params=querystring)
 
         if response.status_code == 200:
             # Parse the JSON response

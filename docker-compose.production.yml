@@ -1,0 +1,30 @@
+version: '3.4'
+
+services:
+
+  web:
+    image: portfolio_tracker
+    build: .
+    command: gunicorn --config ./envs/gunicorn_config.py stock_portfolio_tracker.wsgi:application
+    platform: linux/amd64
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./envs/deploy.env
+    volumes:
+      - /portfolio_tracker/static:/app/static
+
+  nginx:
+    image: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+#      - /portfolio_tracker/static:/home/app/web/staticfiles
+      - /portfolio_tracker/static:/app/static
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/logs:/var/log/nginx
+      - ./certbot/www:/var/www/certbot/:ro
+      - ./certbot/conf/:/etc/nginx/ssl/:ro
+    links:
+      - web

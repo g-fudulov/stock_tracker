@@ -119,7 +119,8 @@ def buy_stock(request, portfolio_pk, stock_symbol):
             )
 
             # Updates the total invested amount
-            portfolio.invested += helper_funcs.format_float(form.cleaned_data['quantity'] * form.cleaned_data['price'])
+            new_invested = portfolio.invested + (form.cleaned_data['quantity'] * form.cleaned_data['price'])
+            portfolio.invested = helper_funcs.format_float(new_invested)
             portfolio.save()
 
             return redirect('portfolio_details', portfolio_pk=portfolio_pk)
@@ -208,8 +209,9 @@ def sell_stock(request, portfolio_pk, stock_symbol):
             portfolio.save()
 
             # Updates the total invested
-            average_price = portfolio_item.average_purchase_price
-            portfolio.invested -= helper_funcs.format_float(average_price * sell_quantity)
+            average_price = helper_funcs.format_float(portfolio_item.average_purchase_price)
+            new_invested = portfolio.invested - (average_price * sell_quantity)
+            portfolio.invested = helper_funcs.format_float(new_invested)
             if portfolio.invested <= 0.02:
                 portfolio.invested = 0
             portfolio.save()
