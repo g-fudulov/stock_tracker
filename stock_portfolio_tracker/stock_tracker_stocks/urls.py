@@ -9,5 +9,6 @@ urlpatterns = [
     path('remove/<int:portfolio_pk>/<str:stock_symbol>/', views.RemoveStock.as_view(), name='remove_stock'),
     path('sales/<int:profile_pk>/<int:portfolio_pk>/', views.SalesDetails.as_view(), name='sales_details'),
     path('buys/<int:profile_pk>/<int:portfolio_pk>/', views.BuysDetails.as_view(), name='buys_details'),
-    path('reset-portfolio/<int:profile_pk>/<int:portfolio_pk>/', views.reset_portfolio, name='reset_portfolio')
+    path('reset-portfolio/<int:profile_pk>/<int:portfolio_pk>/', views.reset_portfolio, name='reset_portfolio'),
+    path('fetch-data/<str:symbol>/', views.fetch_price, name='api-fetch')
 ]

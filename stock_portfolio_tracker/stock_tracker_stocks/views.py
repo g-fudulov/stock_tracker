@@ -1,4 +1,8 @@
 import requests
+import os
+
+from django.http import JsonResponse
+from dotenv import load_dotenv
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
@@ -7,10 +11,12 @@ from stock_portfolio_tracker.stock_tracker_stocks.models import Portfolio, Portf
 from django.views import generic as views
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from stock_portfolio_tracker.stock_tracker_stocks.forms import BuyStockForm, SearchStockForm, SellStockForm, ResetPortfolio
+from stock_portfolio_tracker.stock_tracker_stocks.forms import BuyStockForm, SearchStockForm, SellStockForm, \
+    ResetPortfolio
 from stock_portfolio_tracker.stock_tracker_stocks import helper_funcs
 
 UserModel = get_user_model()
+load_dotenv('envs/deploy.env')
 
 
 # Create your views here.
@@ -129,7 +135,6 @@ def buy_stock(request, portfolio_pk, stock_symbol):
 
 
 class RemoveStock(LoginRequiredMixin, UserPassesTestMixin, views.DeleteView):
-
     template_name = "portfolio/remove.html"
 
     def get_success_url(self):
@@ -164,7 +169,7 @@ class RemoveStock(LoginRequiredMixin, UserPassesTestMixin, views.DeleteView):
         portfolio.invested -= helper_funcs.format_float(portfolio_item.quantity * portfolio_item.average_purchase_price)
         portfolio.save()
         portfolio_item.delete()
-        
+
         return super().form_valid(form)
 
 
@@ -333,3 +338,20 @@ class BuysDetails(LoginRequiredMixin, UserPassesTestMixin, views.ListView):
             {"error": 'You are not the owner of this portfolio details!'},
             status=404
         )
+
+
+@login_required(login_url=reverse_lazy("login_user"))
+def fetch_price(request, symbol):
+    api_url = "https://twelve-data1.p.rapidapi.com/price"
+
+    querystring = {"symbol": symbol, "format": "json", "outputsize": "30"}
+
+    headers = {
+        "X-RapidAPI-Key": os.getenv('API_KEY', None),
+        "X-RapidAPI-Host": os.getenv('API_HOST', None)
+    }
+    # Make API request using the api_key
+    response = requests.get(api_url, headers=headers, params=querystring)
+
+    data = response.json()
+    return JsonResponse(data)

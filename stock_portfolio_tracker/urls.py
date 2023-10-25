@@ -22,5 +22,5 @@ urlpatterns = [
     path('', include('stock_portfolio_tracker.stock_tracker_users.urls')),
     path('portfilio/', include('stock_portfolio_tracker.stock_tracker_stocks.urls')),
     path('profile/', include('stock_portfolio_tracker.stock_tracker_profiles.urls')),
-
+    path('api/', include('stock_portfolio_tracker.stock_tracker_stocks.urls'))
 ]
