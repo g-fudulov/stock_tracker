@@ -1,0 +1,159 @@
+section.heading {
+    align-items: center;
+    justify-content: center;
+    margin-top: 22px;
+}
+
+section.heading h2 {
+    border-bottom: 1px solid #cccccc;
+}
+
+section > form.orders {
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+}
+
+input {
+    background: rgb(54 57 69);
+    border: none;
+    border-radius: 4px;
+    color: #ffffff;
+    margin-left: 4px;
+    font-size: 22px;
+    padding-left: 6px;
+}
+
+section > form.orders p {
+    font-size: 18px;
+}
+
+.bottom {
+    margin-top: 22px;
+}
+
+section > form.orders.col {
+    flex-direction: column;
+}
+
+section.heading.wrapper.col {
+    flex-direction: column;
+    gap: 6px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-right: 14px;
+    padding-left: 14px;
+}
+
+@media (max-width: 1200px) {
+    p.warning {
+        text-align: center;
+    }
+}
+
+
+@media (max-width: 800px) {
+    section > form.orders p {
+        font-size: 16px;
+    }
+
+    #id_symbol {
+        font-size: 20px;
+    }
+
+    #id_price {
+        font-size: 20px;
+    }
+
+    #id_quantity {
+        font-size: 20px;
+    }
+
+    p.warning {
+        font-size: 20px!important;
+    }
+}
+
+@media (max-width: 650px) {
+    section > form.orders p {
+        font-size: 14px;
+    }
+
+    #id_symbol {
+        font-size: 18px;
+    }
+
+
+    #id_price {
+        font-size: 18px;
+    }
+
+    #id_quantity {
+        font-size: 18px;
+    }
+
+    p.warning {
+        font-size: 18px!important;
+    }
+}
+
+@media (max-width: 450px) {
+    section.heading > h2 {
+        font-size: 1.3rem;
+    }
+
+    section > form.orders p {
+        font-size: 12px;
+    }
+
+    #id_symbol {
+        font-size: 14px;
+    }
+
+    #id_price {
+        font-size: 14px;
+    }
+
+    #id_quantity {
+        font-size: 14px;
+    }
+
+    p > span.portfolio.value {
+        font-size: 18px;
+    }
+
+    p.warning {
+        font-size: 16px!important;
+    }
+}
+
+@media (max-width: 385px) {
+    section.heading > h2 {
+        font-size: 1.2rem;
+    }
+
+    section > form.orders p {
+        font-size: 10px;
+    }
+
+    #id_symbol {
+        font-size: 12px;
+    }
+
+    #id_price {
+        font-size: 12px;
+    }
+
+    #id_quantity {
+        font-size: 12px;
+    }
+
+    p > span.portfolio.value {
+        font-size: 16px;
+    }
+
+    p.warning {
+        font-size: 14px!important;
+    }
+}

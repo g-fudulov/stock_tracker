@@ -1,0 +1,14 @@
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+section.error {
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+}
