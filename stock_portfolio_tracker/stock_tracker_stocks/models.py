@@ -11,6 +11,9 @@ class Profile(models.Model):
     address = models.CharField(max_length=60, blank=True, null=True)
     created = models.DateField(auto_now=True)
 
+    def __str__(self):
+        return f"Profile of {self.user.email}"
+
 
 class Portfolio(models.Model):
     owner = models.OneToOneField(Profile, on_delete=models.CASCADE)
@@ -48,6 +51,9 @@ class Sale(models.Model):
     quantity_sold = models.FloatField(default=0)
     sale_price = models.FloatField(default=0)
 
+    def __str__(self):
+        return f"Sale of {self.stock} by {self.initiator}"
+
 
 class Buy(models.Model):
     initiator = models.ForeignKey(Profile, on_delete=models.CASCADE)
@@ -55,3 +61,6 @@ class Buy(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     quantity_bought = models.FloatField(default=0)
     buy_price = models.FloatField(default=0)
+
+    def __str__(self):
+        return f"Buy of {self.stock} by {self.initiator}"
