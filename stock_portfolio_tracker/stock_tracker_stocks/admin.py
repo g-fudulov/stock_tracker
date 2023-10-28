@@ -1,5 +1,5 @@
 from django.contrib import admin
-from models import Profile, Portfolio, PortfolioItem, Stock, Sale, Buy
+from ..stock_tracker_stocks.models import Profile, Portfolio, PortfolioItem, Stock, Sale, Buy
 
 
 # Register your models here.

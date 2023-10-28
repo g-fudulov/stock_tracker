@@ -1,5 +1,6 @@
 from django.contrib import admin
-from models import MyUser
+# from models import MyUser
+from ..stock_tracker_stocks.models import MyUser
 
 
 # Register your models here.
