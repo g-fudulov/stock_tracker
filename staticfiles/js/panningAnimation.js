@@ -8,6 +8,7 @@ if (sectionElement !== null || imageTrack !== null) {
     }
 
     sectionElement.onmousemove = e => {
+        if (window.innerWidth < 1800) {return;}
         if (sectionElement.dataset.mouseDownAt === "0") {return}
 
 
