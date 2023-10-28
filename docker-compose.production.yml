@@ -3,7 +3,7 @@ version: '3.4'
 services:
 
   web:
-    image: portfolio_tracker
+    image: gfudulov/portfolio_tracker
     build: .
     command: gunicorn --config ./envs/gunicorn_config.py stock_portfolio_tracker.wsgi:application
     platform: linux/amd64
