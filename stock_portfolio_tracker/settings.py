@@ -25,7 +25,7 @@ load_dotenv('envs/deploy.env')
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('SECRET_KEY', None)
-CSRF_TRUSTED_ORIGINS = [f'http://{x}:80' for x in os.environ.get('ALLOWED_HOSTS', '').split(' ')]
+CSRF_TRUSTED_ORIGINS = [f'https://{x}' for x in os.environ.get('ALLOWED_HOSTS', '').split(' ')]
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', False)

@@ -73,7 +73,7 @@
                 <a href="{% url 'portfolio_details' request.user.profile.portfolio.pk %}" class="mobile-hide">My Portfolio</a>
                 </div>
                 <h1 class="heading">Portfolio Tracker</h1>
-                <a href="{% url 'profile_details' request.user.profile.pk %}">{{ request.user }}</a>
+                <a href="{% url 'profile_details' request.user.profile.pk %}">Profile</a>
             {% endif %}
     </header>
         {% block page_content %}
