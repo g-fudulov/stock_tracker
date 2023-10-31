@@ -21,7 +21,7 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - /portfolio_tracker/static:/home/ubuntu/app/stock_tracker/static/
+      - /portfolio_tracker/static:/app/static
       - ./nginx/conf.d:/etc/nginx/conf.d/
       - ./certbot/conf/:/etc/nginx/ssl/
       - ./certbot/data:/usr/share/nginx/html/letsencrypt
@@ -29,7 +29,7 @@ services:
       - web
 
   certbot:
-    image: certbot/certbot:latest
+    image: certbot/certbot
     command: certonly --webroot --webroot-path=/usr/share/nginx/html/letsencrypt --email fudulov.georgi@gmail.com --agree-tos --no-eff-email -d portfolio-tracker.com
     volumes:
       - ./certbot/conf/:/etc/letsencrypt
