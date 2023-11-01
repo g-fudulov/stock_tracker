@@ -3,3 +3,4 @@ db.sqlite3
 envs/
 postgresql
 nginx/logs
+certbot/*

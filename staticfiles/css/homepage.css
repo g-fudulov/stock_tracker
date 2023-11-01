@@ -129,6 +129,9 @@ span.emphasis.desc {
 button.hero {
     box-shadow: 2px 2px 10px rgb(255 207 35 / 31%);
     background: #ffdd0054!important;
+    --bs-btn-padding-x: 0.75rem!important;
+    --bs-btn-padding-y: 0.375rem!important;
+    --bs-btn-font-size: 1rem!important;
 }
 
 button.hero:hover {
@@ -166,7 +169,6 @@ section.middle-hero {
 
 #image-track img {
     width: 100%;
-    /*width: 100vw;*/
     height: 70vmin;
     object-fit: cover;
     border: 1px solid rgb(255 207 35 / 31%);
@@ -284,6 +286,25 @@ div.icon.wrapper {
     border-radius: 6px;
     overflow: hidden;
     box-shadow: 0px 0px 10px rgb(255 207 35 / 50%);
+}
+
+@media (max-width: 1799px) {
+    #image-track {
+        flex-direction: column;
+        height: unset;
+        position: static;
+    }
+
+    section.middle-hero {
+        position: static;
+        height: unset;
+        margin-bottom: 82px;
+    }
+
+    .middle-hero-heading {
+        margin-bottom: 22px;
+    }
+
 }
 
 @media (max-width: 1400px) {
