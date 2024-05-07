@@ -3,7 +3,7 @@
 
 ![Website Status](https://img.shields.io/website?url=https%3A%2F%2Fportfoliotracker.live)
 
-This is a simple stock portfolio tracker website built using Django, Nginx, and Gunicorn. It allows users to manage their stock portfolios and provides real-time data for stocks.
+This is a simple stock portfolio tracker website built using Django, Nginx, and Gunicorn. It allows users to manage their stock portfolios and provides real-time data for US stocks.
 
 ## Table of Contents
 - [Features](#features)
@@ -35,7 +35,7 @@ These instructions will help you get a copy of the project up and running on you
 2. **Build the Docker container:**
 
     ```bash
-    docker-compose -f docker-compose.yml up --build
+    docker compose -f docker-compose.yml up --build
 
 3. **Access the website**
 
@@ -54,33 +54,33 @@ These instructions will help you get a copy of the project up and running on you
 1. **Build the Docker container:**
 
     ```bash
-    docker-compose -f docker-compose.production.yml build
+    docker compose -f docker-compose.production.yml build
 
 2. **Run only web container:**
 
     ```bash
-    docker-compose -f docker-compose.production.yml up web -d
+    docker compose -f docker-compose.production.yml up web -d
 
 3. **Collect the static files:**
 
     ```bash
-    docker-compose -f docker-compose.production.yml exec web python.manage.py collectstatic
+    docker compose -f docker-compose.production.yml exec web python manage.py collectstatic
    
 4. **Migrate the database:**
 
     ```bash
-    docker-compose -f docker-compose.production.yml exec web python.manage.py migrate
+    docker compose -f docker-compose.production.yml exec web python manage.py migrate
 
 5. **Run nginx container:**
    - If setting up for the first time => remove the redirect in nginx/conf.d/default.conf
 
        ```bash
-       docker-compose -f docker-compose.production.yml up nginx -d
+       docker compose -f docker-compose.production.yml up nginx -d
   
 6. **Obtain the SSL certificate by letsencrypt:**
 
     ```bash
-    docker-compose -f docker-compose.production.yml up certbot -d
+    docker compose -f docker-compose.production.yml up certbot -d
 
 ### Contributing
 
