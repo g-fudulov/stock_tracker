@@ -1,7 +1,7 @@
 # stock_tracker
 # Stock Portfolio Tracker
 
-![Website Status](https://img.shields.io/website?url=https%3A%2F%2Fportfoliotracker.live)
+![Website Status](https://img.shields.io/website?url=https%3A%2F%2Fportfoliotracker.live) at https://portfoliotracker.live/
 
 This is a simple stock portfolio tracker website built using Django, Nginx, and Gunicorn. It allows users to manage their stock portfolios and provides real-time data for US stocks.
 
